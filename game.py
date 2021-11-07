@@ -8,6 +8,7 @@ STRIKE_SCORE, BALL_SCORE = 0.1, 0.05 # 스트라이크/볼 점수
 TRY_LIMIT = 30 # 시도 횟수 제한
 EASY_MAX = 900 * TRY_LIMIT + 30 # EASY 난이도 최고 점수
 HARD_MAX = 1600 * TRY_LIMIT + 30 # HARD 난이도 최고 점수
+END = False
 
 
 # ===== 클래스 ===== #
@@ -104,3 +105,23 @@ def get_input() -> str:
   result = input(f"{EASY}: EASY(3자리), {HARD}: HARD(4자리), {EXIT}: EXIT(종료)\n")
   print("-" * 30)
   return result
+
+# 숫자 야구를 시작하는 함수
+def start() -> bool:
+  command = get_input()
+
+  if command == EASY: play_baseball(3)
+  elif command == HARD: play_baseball(4)
+
+  elif command == EXIT:
+      print("숫자 야구를 종료합니다.")
+      return END
+
+  else: print("잘못된 명령어입니다. 다시 입력해주세요.")
+
+  return not END
+
+
+# ===== Main ===== #
+if __name__ == "__main__":
+  print("main.py를 실행하세요.")
