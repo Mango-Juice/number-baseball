@@ -3,12 +3,11 @@ from random import shuffle
 
 
 # ===== 상수 ===== #
-EASY, HARD, EXIT = ('1', '2', '3')
-STRIKE_SCORE, BALL_SCORE = 0.1, 0.05
-TRY_LIMIT = 30
-EASY_MAX = 900 * TRY_LIMIT + 30
-HARD_MAX = 1600 * TRY_LIMIT + 30
-ROUND = 2
+EASY, HARD, EXIT = ('1', '2', '3') # command용 상수
+STRIKE_SCORE, BALL_SCORE = 0.1, 0.05 # 스트라이크/볼 점수
+TRY_LIMIT = 30 # 시도 횟수 제한
+EASY_MAX = 900 * TRY_LIMIT + 30 # EASY 난이도 최고 점수
+HARD_MAX = 1600 * TRY_LIMIT + 30 # HARD 난이도 최고 점수
 
 
 # ===== 클래스 ===== #
