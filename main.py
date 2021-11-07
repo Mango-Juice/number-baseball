@@ -5,10 +5,7 @@
 import game
 
 while True:
-    print("=" * 30)
-    print("숫자 야구를 시작합니다.")
-    print(f"최고기록: {game.EASY_MAX}점(EASY), {game.HARD_MAX}점(HARD)")
-    command = input(f"{game.EASY}: EASY(3자리), {game.HARD}: HARD(4자리), {game.EXIT}: EXIT(종료)\n")
+    command = game.get_input()
 
     if command == game.EASY: game.play_baseball(3)
     elif command == game.HARD: game.play_baseball(4)

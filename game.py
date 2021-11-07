@@ -3,11 +3,11 @@ from random import shuffle
 
 
 # ===== 상수 ===== #
-EASY, HARD, EXIT = ('1', '2', '3')
-STRIKE_SCORE, BALL_SCORE = 0.1, 0.05
-TRY_LIMIT = 30
-EASY_MAX = round(900 * TRY_LIMIT + 30, 2)
-HARD_MAX = round(1600 * TRY_LIMIT + 30, 2)
+EASY, HARD, EXIT = ('1', '2', '3') # command용 상수
+STRIKE_SCORE, BALL_SCORE = 0.1, 0.05 # 스트라이크/볼 점수
+TRY_LIMIT = 30 # 시도 횟수 제한
+EASY_MAX = 900 * TRY_LIMIT + 30 # EASY 난이도 최고 점수
+HARD_MAX = 1600 * TRY_LIMIT + 30 # HARD 난이도 최고 점수
 
 
 # ===== 클래스 ===== #
@@ -70,11 +70,11 @@ class Game:
     # 최종 점수를 프린트하는 함수
     def print_score(self, success: bool) -> None:
         if success: self.add_final_score()
-        real_score = round(100 * self.score, 2)
-        print(f"최종 점수: {real_score}점")
+        print(f"최종 점수: {100 * self.score:.2f}점")
 
 
 # ===== 함수 ===== #
+# 숫자 야구를 진행하는 함수
 def play_baseball(n: int) -> None:
     game = Game(n)
 
@@ -95,3 +95,12 @@ def play_baseball(n: int) -> None:
     print("제한 횟수 내에 숫자를 맞추지 못하셨습니다.")
     game.print_score(False)
 
+
+# 사용자에게 난이도 선택을 받는 함수
+def get_input() -> str:
+  print("=" * 30)
+  print("숫자 야구를 시작합니다.")
+  print(f"최고기록: {EASY_MAX:.2f}점(EASY), {HARD_MAX:.2f}점(HARD)")
+  result = input(f"{EASY}: EASY(3자리), {HARD}: HARD(4자리), {EXIT}: EXIT(종료)\n")
+  print("-" * 30)
+  return result
