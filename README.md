@@ -14,4 +14,4 @@
 5. 정답을 맞추면 점수가 표시되고 다시 **1**로 돌아갑니다. 게임을 그만 하시려면 `3`을 입력해주세요.
 
 ## 코드 및 실행 문의
-**Issue**나 **[채널톡](https://mango-juice.channel.io/)**으로 문의주세요.
+**Issue**나 [채널톡](https://mango-juice.channel.io/)으로 문의주세요.
