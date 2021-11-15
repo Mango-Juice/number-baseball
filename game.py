@@ -1,5 +1,7 @@
 # ===== 라이브러리 ===== #
 from random import shuffle
+import datetime
+import pandas as pd
 
 
 # ===== 상수 ===== #
@@ -8,6 +10,8 @@ STRIKE_SCORE, BALL_SCORE = 0.1, 0.05 # 스트라이크/볼 점수
 TRY_LIMIT = 30 # 시도 횟수 제한
 EASY_MAX = 900 * TRY_LIMIT + 30 # EASY 난이도 최고 점수
 HARD_MAX = 1600 * TRY_LIMIT + 30 # HARD 난이도 최고 점수
+DATA_FILE = "data.csv" # 점수 기록 파일
+RANKING_COUNT = 3 # 상위 몇 개의 기록을 보여줄 지
 END = False
 
 
@@ -70,7 +74,15 @@ class Game:
     # 최종 점수를 저장 및 프린트하는 함수
     def record_score(self, success: bool) -> None:
         if success: self.add_final_score()
-        # 기록 저장 코드 완성해야 함.
+
+        if self.score > 0:
+          with open(DATA_FILE, "a") as f:
+            now = datetime.datetime.now()
+            now_date = now.strftime('%Y.%m.%d')
+            now_time = now.strftime('%H:%M:%S')
+            difficulty = "EASY" if self.n == 3 else "HARD"
+            f.write(f"\n{now_date},{now_time},{100 * self.score:.2f},{difficulty}")
+        
         print(f"최종 점수: {100 * self.score:.2f}점")
 
 
@@ -102,13 +114,16 @@ def get_input() -> str:
   print("=" * 30)
   print("숫자 야구를 시작합니다.")
   print(f"최고 점수: {EASY_MAX:.2f}점(EASY), {HARD_MAX:.2f}점(HARD)")
-  result = input(f"{EASY}: EASY(3자리), {HARD}: HARD(4자리), {HISTORY}: 기록 보기, {EXIT}: 종료\n")
+  result = input(f"{EASY}: EASY(3자리), {HARD}: HARD(4자리), {HISTORY}: 랭킹 보기, {EXIT}: 종료\n")
   print("-" * 30)
   return result
 
 
 def print_history() -> None:
-  pass # 완성해야 함
+  data = pd.read_csv(DATA_FILE)
+  data = data.nlargest(RANKING_COUNT, "Score")
+  print(f"[ 상위 {RANKING_COUNT}개의 기록만 표시됩니다 ]")
+  print(data.to_string(index=False))
 
 
 # 숫자 야구를 시작하는 함수
