@@ -8,11 +8,13 @@ import pandas as pd
 EASY, HARD, HISTORY, EXIT = map(str, range(1, 5)) # command용 상수
 STRIKE_SCORE, BALL_SCORE = 0.1, 0.05 # 스트라이크/볼 점수
 TRY_LIMIT = 30 # 시도 횟수 제한
-EASY_MAX = 900 * TRY_LIMIT + 30 # EASY 난이도 최고 점수
-HARD_MAX = 1600 * TRY_LIMIT + 30 # HARD 난이도 최고 점수
 DATA_FILE = "data.csv" # 점수 기록 파일
 RANKING_COUNT = 3 # 상위 몇 개의 기록을 보여줄 지
 END = False
+
+
+# ===== 전역 변수 ===== #
+records = pd.DataFrame() # 랭킹 기록 변수
 
 
 # ===== 클래스 ===== #
@@ -113,21 +115,22 @@ def play_baseball(n: int) -> None:
 def get_input() -> str:
   print("=" * 30)
   print("숫자 야구를 시작합니다.")
-  print(f"최고 점수: {EASY_MAX:.2f}점(EASY), {HARD_MAX:.2f}점(HARD)")
+  print(f"최고 점수: {records.iloc[0]['Score']:.2f}점({records.iloc[0]['Difficulty']}로 달성)")
   result = input(f"{EASY}: EASY(3자리), {HARD}: HARD(4자리), {HISTORY}: 랭킹 보기, {EXIT}: 종료\n")
   print("-" * 30)
   return result
 
 
-def print_history() -> None:
+def load_history() -> None:
+  global records
+
   data = pd.read_csv(DATA_FILE)
-  data = data.nlargest(RANKING_COUNT, "Score")
-  print(f"[ 상위 {RANKING_COUNT}개의 기록만 표시됩니다 ]")
-  print(data.to_string(index=False))
+  records = data.nlargest(RANKING_COUNT, "Score")
 
 
 # 숫자 야구를 시작하는 함수
 def start() -> bool:
+  load_history()
   command = get_input()
 
   if command == EASY: play_baseball(3)
@@ -138,7 +141,8 @@ def start() -> bool:
       return END
 
   elif command == HISTORY:
-    print_history()
+    print(f"[ 상위 {RANKING_COUNT}개의 기록만 표시됩니다 ]")
+    print(records.to_string(index=False))
 
   else: print("잘못된 명령어입니다. 다시 입력해주세요.")
 
